@@ -15,7 +15,7 @@
     "Sell"
   ],
   "author": "José Vidal",
-  "license": "CC0-1.0",
+  "license": "MIT",
   "devDependencies": {
     "electron": "~1.8.2"
   },
