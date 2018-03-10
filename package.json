@@ -1,7 +1,7 @@
 {
-  "name": "bitcoin-client",
-  "version": "1.0.0",
-  "description": "A multi-platform Bitcoin Client!",
+  "name": "bitcoin-client-electron",
+  "version": "1.0.1",
+  "description": "Multi-platform Bitcoin desktop client built with Electron",
   "main": "main.js",
   "scripts": {
     "start": "electron ."
