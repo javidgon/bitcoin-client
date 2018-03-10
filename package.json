@@ -1,0 +1,25 @@
+{
+  "name": "bitcoin-client",
+  "version": "1.0.0",
+  "description": "A multi-platform Bitcoin Client!",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": "https://github.com/javidgon/bitcoin-client",
+  "keywords": [
+    "Electron",
+    "Bitcoin",
+    "Coinbase",
+    "Buy",
+    "Sell"
+  ],
+  "author": "José Vidal",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "electron": "~1.8.2"
+  },
+  "dependencies": {
+    "coinbase": "^2.0.7"
+  }
+}

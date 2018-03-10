@@ -1,0 +1,33 @@
+body {
+    position: relative;
+    font-family: 'Mina', sans-serif;
+    padding: 10px;
+    background-color: #1F1F1F;
+    color: white;
+}
+
+h1 {
+    color: #F2A30F;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #F2A30F;
+}
+
+input {
+    margin: 10px 10px 10px 0;
+    padding: 10px;
+    font-weight: bold;
+}
+
+button {
+    position: absolute;
+    margin-top: 10px;
+    padding: 10px 25px 10px;
+    background-color: #F2A30F;
+    font-weight: bold;
+    border: 2px solid #1F1F1F;
+    right: 10px;
+}
+
+#current-btc-price {
+    font-size: 18px;
+}

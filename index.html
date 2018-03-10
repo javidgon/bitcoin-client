@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Bitcoin Client</title>
+    <link href="https://fonts.googleapis.com/css?family=Mina" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/index.css">
+</head>
+
+<body>
+    <h1>Bitcoin Client
+        <span id="current-btc-price"></span>
+    </h1>
+    <h3 id="user-balance-fiat"></h3>
+    <h3 id="user-balance-btc"></h3>
+
+    <input id="input-amount-fiat" type="text" /><span id="fiat-currency"></span>
+    <button id="buy-btn">Buy</button>
+    </br>
+    <input id="input-amount-btc" type="text" /> BTC
+    <button id="sell-btn">Sell</button>
+    </br>
+    <span id="estimated-amount"></span>
+    <script>
+        // You can also require other files to run in this process
+        require('./renderer.js')
+    </script>
+</body>
+
+</html>
