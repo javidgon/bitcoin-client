@@ -46,11 +46,11 @@ buyBtnElement.addEventListener('click', function (event) {
     After clicking the "Buy" button we would like to buy BTCs. The amount is going to be defined
     by the number of Fiat that we specify in the input.
     */
-    let successfulDialog = function () {
+    let successfulDialog = function (btcAmount) {
         let options = {
             type: 'info',
             title: 'Thanks!',
-            message: 'You bought ' + btcAmount + ' BTCs'
+            message: 'You bought ' + btcAmount + ' BTC'
         }
         dialog.showMessageBox(options)
     }
@@ -75,12 +75,12 @@ buyBtnElement.addEventListener('click', function (event) {
                 failureDialog('Sorry! You don\'t have enough money in your account!');
                 return;
             }
-            successfulDialog();
+            successfulDialog(btcAmount);
             // We update the "fake" balances
             currentBalanceFiat -= money;
             currentBalanceBtc += btcAmount;
             userBalanceFiatElement.innerHTML = 'Balance ' + fiatCurrency + ': ' + currentBalanceFiat + ' ' + fiatCurrency;
-            userBalanceBtcElement.innerHTML = 'Balance BTC: ' + currentBalanceBtc + ' BTCs';
+            userBalanceBtcElement.innerHTML = 'Balance BTC: ' + currentBalanceBtc + ' BTC';
         } else {
             client.getAccounts({}, function (err, accounts) {
                 accounts.forEach(function (acct) {
@@ -98,7 +98,7 @@ buyBtnElement.addEventListener('click', function (event) {
                         };
                         acct.buy(args, function (err, txn) {
                             if (!err) {
-                                successfulDialog();
+                                successfulDialog(btcAmount);
                                 // We update the "real" balances
                                 refresh();
                             } else {
@@ -117,11 +117,11 @@ sellBtnElement.addEventListener('click', function (event) {
     After clicking the "Sell" button we would like to sell BTCs.
     */
 
-    let successfulDialog = function () {
+    let successfulDialog = function (btcAmount) {
         let options = {
             type: 'info',
             title: 'Thanks!',
-            message: 'You sold ' + btcAmount + ' BTCs'
+            message: 'You sold ' + btcAmount + ' BTC'
         }
         dialog.showMessageBox(options)
     }
@@ -143,15 +143,15 @@ sellBtnElement.addEventListener('click', function (event) {
     getTotalPriceOfBtcAmount(client, fiatCurrency, btcAmount, useSandboxMode, fakeBTCPrice).then(function (price) {
         if (useSandboxMode) {
             if (btcAmount > currentBalanceBtc) {
-                failureDialog('Sorry! You don\'t have enough BTCs in your account!');
+                failureDialog('Sorry! You don\'t have enough BTC in your account!');
                 return;
             }
-            successfulDialog();
+            successfulDialog(btcAmount);
             // We update the "fake" balances
             currentBalanceFiat += price;
             currentBalanceBtc -= btcAmount;
             userBalanceFiatElement.innerHTML = 'Balance ' + fiatCurrency + ': ' + currentBalanceFiat + ' ' + fiatCurrency;
-            userBalanceBtcElement.innerHTML = 'Balance BTC: ' + currentBalanceBtc + ' BTCs';
+            userBalanceBtcElement.innerHTML = 'Balance BTC: ' + currentBalanceBtc + ' BTC';
         } else {
             client.getAccounts({}, function (err, accounts) {
                 accounts.forEach(function (acct) {
@@ -159,7 +159,7 @@ sellBtnElement.addEventListener('click', function (event) {
                         currentBalanceBtc = parseFloat(acct.balance.amount);
 
                         if (btcAmount > currentBalanceBtc) {
-                            failureDialog('Sorry! You don\'t have enough BTCs in your account!');
+                            failureDialog('Sorry! You don\'t have enough BTC in your account!');
                             return;
                         }
 
@@ -169,7 +169,7 @@ sellBtnElement.addEventListener('click', function (event) {
                         };
                         acct.sell(args, function (err, txn) {
                             if (!err) {
-                                successfulDialog();
+                                successfulDialog(btcAmount);
                                 // We update the "real" balances
                                 refresh();
                             } else {
@@ -186,7 +186,7 @@ sellBtnElement.addEventListener('click', function (event) {
 // Events for inputs
 inputAmountFiatElement.addEventListener('keyup', function (event) {
     /*
-    While typing a certain fiat amount in the input, we would like to know how many BTCs that results
+    While typing a certain fiat amount in the input, we would like to know how many BTC that results
     */
     let money = parseFloat(event.target.value);
     if (!money) {
@@ -194,7 +194,7 @@ inputAmountFiatElement.addEventListener('keyup', function (event) {
         return;
     }
     getHowManyBtcCanIBuy(client, fiatCurrency, money, useSandboxMode, fakeBTCPrice).then(function (price) {
-        estimatedAmountElement.innerHTML = money + ' ' + fiatCurrency + ' = ' + price + ' BTCs';
+        estimatedAmountElement.innerHTML = money + ' ' + fiatCurrency + ' = ' + price + ' BTC';
     });
 });
 
@@ -208,7 +208,7 @@ inputAmountBtcElement.addEventListener('keyup', function (event) {
         return;
     }
     getTotalPriceOfBtcAmount(client, fiatCurrency, btcAmount, useSandboxMode, fakeBTCPrice).then(function (price) {
-        estimatedAmountElement.innerHTML = btcAmount + ' BTCs = ' + price + ' ' + fiatCurrency;
+        estimatedAmountElement.innerHTML = btcAmount + ' BTC = ' + price + ' ' + fiatCurrency;
     });
 });
 
@@ -231,7 +231,11 @@ function refresh() {
 fiatCurrencyElement.innerHTML = ' ' + fiatCurrency;
 
 // Refresh data each 30 seconds
-if (!useSandboxMode) {
+if (useSandboxMode) {
+    userBalanceFiatElement.innerHTML = 'Balance Fiat: ' + currentBalanceFiat + ' ' + fiatCurrency;
+    userBalanceBtcElement.innerHTML = 'Balance BTC: ' + currentBalanceBtc + ' BTC';
+    currentBtcPriceElement.innerHTML = '(Price: ' + fakeBTCPrice + ' ' + fiatCurrency + ')';
+} else {
     refresh();
 
     setInterval(function () {
